@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 function Pokemoninfo(props) {
-  const [pokemonStats, setpokemonStats] = useState(null);
-  const [pokemonpic, setpokemonpic] = useState(null);
-  const [pokemontype, setpokemontype] = useState(null);
-
-  const [pokemoninfo, setpokemoninfo] = useState({});
+  const [pokemoninfo, setpokemoninfo] = useState({
+    sprites: {},
+    types: [],
+    stats: []
+  });
 
   useEffect(() => {
     async function getData() {
       await fetch(props.url)
         .then(response => response.json())
         .then(response => {
-          console.log(response);
-          setpokemonStats(Object.values(response.stats));
-          setpokemonpic(response.sprites.front_default);
-
-          setpokemontype(response.types);
-
           setpokemoninfo(response);
         });
     }
@@ -44,8 +38,6 @@ function Pokemoninfo(props) {
     fairy: "D685AD"
   };
 
-  //console.log(pokemonpic);
-
   return (
     <div className="col">
       <div className="card">
@@ -69,12 +61,12 @@ function Pokemoninfo(props) {
           <div className="row align-items-center">
             <div className="col-md-3">
               <img
-                src={pokemonpic}
+                src={pokemoninfo.sprites.front_default}
                 className="card-img-top rounded mx-auto mt-2"
                 alt="#"
               />
-              {pokemontype !== null
-                ? pokemontype.map((element, index) => {
+              {pokemoninfo.types !== null
+                ? pokemoninfo.types.map((element, index) => {
                     return (
                       <span
                         key={index}
@@ -93,8 +85,8 @@ function Pokemoninfo(props) {
             <div className="col-md-9">
               <h4 className="mx-auto">{pokemoninfo.name}</h4>
 
-              {pokemonStats !== null
-                ? pokemonStats.map((element, index) => {
+              {pokemoninfo.stats !== null
+                ? pokemoninfo.stats.map((element, index) => {
                     return (
                       <div key={index} className="row align-items-center">
                         <div className="col-12 col-md-3 ">
