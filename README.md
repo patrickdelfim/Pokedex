@@ -10,4 +10,5 @@ O programa consiste em criar uma Pokedex com um catalago de pokemons e suas info
 (Programa ainda em desenvolvimento)
 
 
-app inspirado nesse video:https://www.youtube.com/watch?v=XehSJF85F38
+app inspirado em tutorial por 
+Chris Stayte 
