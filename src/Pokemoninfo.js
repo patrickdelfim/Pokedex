@@ -17,6 +17,7 @@ function Pokemoninfo(props) {
     }
     getData();
   }, []);
+
   const typecolor = {
     normal: "A8A77A",
     fire: "EE8130",
