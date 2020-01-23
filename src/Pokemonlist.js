@@ -18,8 +18,15 @@ function Pokemonlist(props) {
     async function getData() {
       // Verificacao se o window foi recarregado ou nao.
       if (window.performance) {
-        // se window nao foi recarregado atualizar a lista de pokemon normalmente
-        if (performance.navigation.type != 1) {
+        const data = localStorage.getItem("my-list");
+
+        const nextLink = localStorage.getItem("next-links");
+        const prevLink = localStorage.getItem("prev-links");
+
+        // se window nao foi recarregado ou data nao existir
+        // atualizar a lista de pokemon normalmente
+
+        if (performance.navigation.type != 1 || !data) {
           console.log("pagina nao Recarregou");
 
           await fetch(nextlist)
@@ -30,26 +37,9 @@ function Pokemonlist(props) {
               seturl([response.next, response.previous]);
             });
           // se window foi recarregado. atualizar a lista de pokemon com os dados do localStorage
-        } else {
-          const data = localStorage.getItem("my-list");
-
-          const nextLink = localStorage.getItem("next-links");
-          const prevLink = localStorage.getItem("prev-links");
-
-          if (data) {
-            setlist(JSON.parse(data));
-            seturl([nextLink, prevLink]);
-          }
-          // se data nao existir atualizar a lista de pokemon normalmente
-          else {
-            await fetch(nextlist)
-              .then(response => response.json())
-              .then(response => {
-                setlist(response.results);
-
-                seturl([response.next, response.previous]);
-              });
-          }
+        } else if (data) {
+          setlist(JSON.parse(data));
+          seturl([nextLink, prevLink]);
         }
       }
     }
